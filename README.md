@@ -1,4 +1,4 @@
 Nuke_GIZMO
 ==========
 
-Some personal Nuke GIZMO R&amp;D
+Some personal TD tools for Nuke GIZMO R&amp;D
