@@ -1,0 +1,62 @@
+#! D:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+Gizmo {
+ tile_color 0xdeff16ff
+ gl_color 0xd1ea3aff
+ note_font_size 25
+ addUserKnob {20 User}
+ addUserKnob {6 isGreen l "Green screen?" +STARTLINE}
+ addUserKnob {6 isBlue l "Blue Screen?" -STARTLINE}
+ isBlue {{!(isGreen) x23 1}}
+ addUserKnob {4 mod l "Compute mode" M {0 1 "" ""}}
+ addUserKnob {7 thsl_BR l Threshold R 0.001 10}
+ thsl_BR 5.3
+ addUserKnob {7 mul_blue l "Blue Multiplier"}
+ mul_blue 0.19
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 384
+  ypos -260
+ }
+ Expression {
+  temp_name0 thsl
+  temp_expr0 parent.thsl_BR
+  temp_name1 mul
+  temp_expr1 parent.mul_blue
+  temp_name2 mod
+  temp_expr2 parent.mod
+  temp_name3 isBS
+  temp_expr3 parent.isBlue
+  expr0 r
+  expr1 "!(isBS) ? ( (mod==0) ? ( (g/ r > thsl) ? g : g * mul ) : ( (g/ b > thsl) ? g : g * mul ) ) : g"
+  expr2 "(isBS) ? ( (mod==0) ? ( (b/ r > thsl) ? b : b * mul ) : ( (b/ g > thsl) ? b : b * mul ) ) : b"
+  name Expression1
+  selected true
+  xpos 384
+  ypos -200
+ }
+ Output {
+  name Output1
+  xpos 384
+  ypos -120
+ }
+set N1b2311e0 [stack 0]
+push $N1b2311e0
+ Viewer {
+  inputs 2
+  input_process false
+  name Viewer1
+  xpos 349
+  ypos -14
+ }
+ Grade {
+  inputs 0
+  channels {rgba.red -rgba.green -rgba.blue none}
+  name Grade1
+  xpos 165
+  ypos -226
+  disable true
+ }
+end_group
