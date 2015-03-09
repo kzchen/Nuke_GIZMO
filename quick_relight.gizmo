@@ -1,0 +1,119 @@
+#! D:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
+version 8.0 v4
+add_layer {N N.X N.Y N.Z}
+Gizmo {
+ note_font_size 36
+ addUserKnob {20 main l Main}
+ addUserKnob {41 in l "Normals Layer" T Shuffle1.in}
+ addUserKnob {41 light_point l "light point" T Crop1.light_point}
+ addUserKnob {41 falloff l "light falloff" T CC_alpha.gamma}
+ addUserKnob {41 lit_gain l "light value" T CC_lighting.multiply}
+ addUserKnob {6 lock_sample l "lock sample" +STARTLINE}
+ addUserKnob {6 bg_run l INVISIBLE +INVISIBLE +STARTLINE}
+ bg_run {{"\[python -execlocal temp\\ =\\ 0\\n\\nisLock\\ =\\ nuke.thisNode().knob(\\\"lock_sample\\\").value()\\nnode\\ =\\ nuke.toNode(\\\"snapshot_color\\\")\\nknob\\ =\\ nuke.toNode(\\\"snapshot_color\\\").knob(\\\"intensitydata\\\")\\nswitch\\ =\\ nuke.toNode(\\\"switch_snap\\\").knob(\\\"which\\\")\\ncurFrame\\ =\\ nuke.frame()\\n\\nprint\\ switch.value()\\n\\nif(\\ isLock\\ ==\\ 1\\ ):\\n\\ \\ \\ \\ if(\\ switch.value()\\ ==\\ 0\\ ):\\n\\ \\ \\ \\ \\ \\ \\ \\ knob.clearAnimated()\\n\\ \\ \\ \\ \\ \\ \\ \\ nuke.execute(\\ node,\\ curFrame,\\ curFrame\\ )\\n\\ \\ \\ \\ \\ \\ \\ \\ switch.setValue(1)\\n\\nif(\\ isLock\\ ==\\ 0\\ ):\\n\\ \\ \\ \\ switch.setValue(0)\\n\\nret\\ =\\ temp\\ ]"}}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.snapshot_color.intensitydata} {parent.snapshot_color.intensitydata} {parent.snapshot_color.intensitydata} {parent.snapshot_color.intensitydata}}
+  name Constant1
+  xpos -603
+  ypos 70
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 50
+  ypos -244
+ }
+ Dot {
+  name Dot2
+  xpos 84
+  ypos -159
+ }
+set N16b27860 [stack 0]
+ Dot {
+  name Dot1
+  xpos -189
+  ypos -159
+ }
+ Shuffle {
+  in N
+  in2 alpha
+  alpha red2
+  name Shuffle1
+  xpos -223
+  ypos -83
+ }
+set N16b27f40 [stack 0]
+ Crop {
+  box {{light_point.x x1 1010.5 x10 1046 806 x101 795.0999756} {light_point.y x1 559.5 x10 491 384 x101 962.4000244} {light_point.x+1 x1 1011 x10 1047 807 x101 796.0999756} {light_point.y+1 x1 560 x10 492 385 x101 963.4000244}}
+  crop false
+  name Crop1
+  xpos -436
+  ypos -83
+  addUserKnob {20 User}
+  addUserKnob {12 light_point}
+  light_point {1046 491}
+ }
+set N16b282b0 [stack 0]
+ Switch {
+  inputs 2
+  name switch_snap
+  tile_color 0x96e884ff
+  note_font_size 24
+  selected true
+  xpos -436
+  ypos 86
+ }
+ Crop {
+  box {0 0 {"\[python nuke.Root()\\\[\\\"format\\\"\\].value().width()]"} {"\[python nuke.Root()\\\[\\\"format\\\"\\].value().height()]"}}
+  crop false
+  name Crop2
+  xpos -436
+  ypos 203
+ }
+push $N16b27f40
+ Difference {
+  inputs 2
+  name Difference1
+  xpos -223
+  ypos 197
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -223
+  ypos 306
+ }
+ Grade {
+  channels alpha
+  gamma 0.01
+  name CC_alpha
+  xpos -86
+  ypos 306
+ }
+push $N16b27860
+ Grade {
+  inputs 1+1
+  multiply 100
+  name CC_lighting
+  xpos 50
+  ypos 312
+ }
+ Output {
+  name Output1
+  xpos 50
+  ypos 476
+ }
+push $N16b282b0
+ CurveTool {
+  ROI {320 180 960 540}
+  autocropdata {320 180 960 540}
+  intensitydata {{curve x101 -0.4692382812} {curve x101 0.8188476562} {curve x101 0.3283691406} 0}
+  name snapshot_color
+  note_font_size 24
+  xpos -604
+  ypos -10
+ }
+end_group
