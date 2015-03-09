@@ -1,173 +1,9 @@
 #! D:/Program Files/Nuke8.0v4/nuke-8.0.v4.dll -nx
 version 8.0 v4
-define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
-<layout version="1.0">
-    <window x="-4" y="-4" w="1792" h="1088" screen="0">
-        <splitter orientation="1">
-            <split size="1299"/>
-            <splitter orientation="1">
-                <split size="49"/>
-                <dock id="" hideTitles="1" activePageId="Toolbar.1">
-                    <page id="Toolbar.1"/>
-                </dock>
-                <split size="1246"/>
-                <splitter orientation="2">
-                    <split size="605"/>
-                    <dock id="" activePageId="Viewer.1">
-                        <page id="Viewer.1"/>
-                    </dock>
-                    <split size="425"/>
-                    <dock id="" activePageId="DAG.1">
-                        <page id="DAG.1"/>
-                        <page id="Curve Editor.1"/>
-                        <page id="DopeSheet.1"/>
-                    </dock>
-                </splitter>
-            </splitter>
-            <split size="481"/>
-            <dock id="" activePageId="Properties.1">
-                <page id="Properties.1"/>
-            </dock>
-        </splitter>
-    </window>
-</layout>
-}
-Root {
- inputs 0
- name "E:/Users/KsKZ/Documents/_KZ Project/_KZDev/_scripts/_Nuke/env_Sph_tool_kz/env_Sph_tool_kz_v09.nk"
- format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
- proxy_type scale
- proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
-}
-BackdropNode {
- inputs 0
- name BackdropNode1
- tile_color 0x388e8e00
- note_font_size 42
- xpos 266
- ypos -443
- bdwidth 518
- bdheight 519
-}
-StickyNote {
- inputs 0
- name StickyNote1
- label "assign object alpha here!"
- note_font_size 36
- xpos -1062
- ypos 320
-}
-StickyNote {
- inputs 0
- name StickyNote3
- label "normal camera pass"
- note_font_size 24
- xpos -805
- ypos -448
-}
-StickyNote {
- inputs 0
- name StickyNote4
- label "Environment map"
- note_font_size 36
- xpos 346
- ypos -596
-}
-Read {
- inputs 0
- file E:/Users/KsKZ/Documents/maya/projects/default/images/ironman_helmet/ironman_helmet_bty.1.exr
- format "1280 720 0 0 1280 720 0.999562 "
- origset true
- colorspace linear
- name Read1
- xpos -164
- ypos 194
-}
-set C2d964e20 [stack 0]
-Grade {
- gamma 0.64
- name Grade3
- xpos -164
- ypos 307
-}
-set N2dc19210 [stack 0]
-Read {
- inputs 0
- file E:/Users/KsKZ/Documents/maya/projects/default/images/ironman_helmet/ironman_helmet_id.1.exr
- format "1280 720 0 0 1280 720 0.999562 "
- origset true
- name Read2
- xpos -451
- ypos -670
-}
-set C2d965190 [stack 0]
-Dot {
- name Dot1
- xpos -417
- ypos -521
-}
-set N2d965be0 [stack 0]
-add_layer {normalCam normalCam.red normalCam.green normalCam.blue normalCam.alpha normalCam.NX normalCam.NY normalCam.NZ}
-Shuffle {
- in normalCam
- in2 alpha
- alpha red2
- name Shuffle3
- label normalCam
- xpos -643
- ypos -360
- postage_stamp true
-}
-push $N2d965be0
-add_layer {pointCam pointCam.red pointCam.green pointCam.blue pointCam.alpha}
-Shuffle {
- in pointCam
- in2 alpha
- alpha red2
- name Shuffle2
- label pointCamera
- xpos -321
- ypos -359
- postage_stamp true
-}
-Read {
- inputs 0
- file "E:/Users/KsKZ/Documents/_KZ Project/_KZDev/_scripts/_Nuke/env_Sph_tool_kz/sources/uffizi-large.hdr"
- format "2400 1200 0 0 2400 1200 1 "
- origset true
- name Read6
- xpos 335
- ypos -234
-}
-Read {
- inputs 0
- file "E:/Users/KsKZ/Documents/_KZ Project/_KZDev/_scripts/_Nuke/env_Sph_tool_kz/sources/Apartment_Spherical_HiRes.hdr"
- format "2048 1024 0 0 2048 1024 1 latLon"
- origset true
- name Read5
- xpos 572
- ypos -256
-}
-Grade {
- multiply 1.34
- gamma 0.45454
- name Grade2
- xpos 572
- ypos -113
-}
-Switch {
- inputs 2
- name Switch2
- xpos 335
- ypos -73
-}
-Group {
+Gizmo {
  inputs 3
- name Env_sphere_map_KZ1
  tile_color 0xe9ff55ff
  note_font_size 36
- xpos -441
- ypos -86
  addUserKnob {20 parm}
  addUserKnob {6 hideScript l INVISIBLE +INVISIBLE +STARTLINE}
  hideScript {{"\[python -execlocal if(\\ nuke.thisNode().knob(\\\"isFresnel\\\").value()\\ ):\\ntnuke.thisNode().knob(\\\"fre_curve\\\").setEnabled(True)\\ntnuke.thisNode().knob(\\\"fres_ref_zero\\\").setEnabled(True)\\ntnuke.thisNode().knob(\\\"fres_ref_90\\\").setEnabled(True)\\nelse:\\ntnuke.thisNode().knob(\\\"fre_curve\\\").setEnabled(False)\\ntnuke.thisNode().knob(\\\"fres_ref_zero\\\").setEnabled(False)\\ntnuke.thisNode().knob(\\\"fres_ref_90\\\").setEnabled(False)\\nret\\ =\\ 0\\n]"}}
@@ -218,8 +54,8 @@ Group {
   xpos -55
   ypos 131
  }
- set C2d9f56f0 [stack 0]
-set N2d9f56f0 [stack 0]
+ set C1a954880 [stack 0]
+set N1a954880 [stack 0]
  Invert {
   channels rgb
   name Invert1
@@ -234,12 +70,12 @@ set N2d9f56f0 [stack 0]
   ypos -177
   number 2
  }
-clone $C2d9f56f0 {
+clone $C1a954880 {
   xpos 113
   ypos 231
   selected false
  }
-set N2da8c6b0 [stack 0]
+set N1a9552d0 [stack 0]
  MergeExpression {
   inputs 2
   temp_name0 ior
@@ -259,14 +95,14 @@ set N2da8c6b0 [stack 0]
   ypos 421
   disable true
  }
-push $N2da8c6b0
-push $N2d9f56f0
+push $N1a9552d0
+push $N1a954880
  Dot {
   name Dot2
   xpos -151
   ypos 135
  }
-set N2da8cd90 [stack 0]
+set N1a9559b0 [stack 0]
  MergeExpression {
   inputs 2
   temp_name0 dot
@@ -288,14 +124,14 @@ set N2da8cd90 [stack 0]
   xpos 135
   ypos 733
  }
-push $N2da8cd90
+push $N1a9559b0
  Dot {
   name Dot1
   xpos -151
   ypos 324
  }
-push $N2da8c6b0
-push $N2d9f56f0
+push $N1a9552d0
+push $N1a954880
  MergeExpression {
   inputs 2
   temp_name0 dot_VN
@@ -357,7 +193,7 @@ push $N2d9f56f0
   xpos 249
   ypos 58
  }
- set C2daeed90 [stack 0]
+ set C1a9578a0 [stack 0]
  Expression {
   temp_name0 w
   temp_expr0 Reformat1.width
@@ -374,7 +210,7 @@ push $N2d9f56f0
   xpos 247
   ypos 259
  }
-set N2daef100 [stack 0]
+set N1a957c10 [stack 0]
  Input {
   inputs 0
   name Env_image
@@ -398,7 +234,7 @@ set N2daef100 [stack 0]
   ypos -113
   disable true
  }
-clone $C2daeed90 {
+clone $C1a9578a0 {
   xpos 423
   ypos -45
   selected false
@@ -424,7 +260,7 @@ clone $C2daeed90 {
   xpos 423
   ypos 259
  }
-set N2db72160 [stack 0]
+set N1aa29130 [stack 0]
  STMap {
   inputs 2
   channels rgb
@@ -449,15 +285,15 @@ set N2db72160 [stack 0]
   ypos 733
   disable {{"\[python 1\\ -\\ nuke.thisGroup().knob(\\\"isFresnel\\\").value()]"}}
  }
-set N2db72bb0 [stack 0]
+set N1aa29b80 [stack 0]
  Output {
   name Output1
   xpos 423
   ypos 835
  }
-push $N2daef100
-push $N2db72160
-push $N2db72bb0
+push $N1a957c10
+push $N1aa29130
+push $N1aa29b80
  Viewer {
   inputs 3
   input_number 1
@@ -468,86 +304,3 @@ push $N2db72bb0
   ypos 650
  }
 end_group
-set N356b350 [stack 0]
-Grade {
- multiply 5
- name Grade4
- xpos -441
- ypos 223
-}
-Copy {
- inputs 2
- from0 rgba.red
- to0 rgba.alpha
- name Copy4
- xpos -441
- ypos 301
-}
-Premult {
- name Premult
- xpos -441
- ypos 388
-}
-set N2db73600 [stack 0]
-Grade {
- gamma 0.295
- unpremult rgba.alpha
- name Grade1
- xpos -441
- ypos 504
- disable true
-}
-push $N2dc19210
-Merge2 {
- inputs 2
- operation screen
- name Merge1
- xpos -164
- ypos 510
-}
-push $N356b350
-Viewer {
- inputs 2
- frame 259
- frame_range 1-360
- frame_range_lock true
- input_number 1
- viewerProcess rec709
- input_process false
- name Viewer2
- xpos -142
- ypos 702
-}
-StickyNote {
- inputs 0
- name StickyNote2
- label "point camera pass"
- note_font_size 24
- xpos -335
- ypos -442
-}
-clone $C2d965190 {
- inputs 0
- xpos -399
- ypos -980
- selected false
-}
-clone $C2d964e20 {
- inputs 0
- xpos -134
- ypos -984
- selected false
-}
-push $N2db73600
-push 0
-Viewer {
- inputs 2
- frame 1
- input_number 1
- colour_sample_bbox {0.217187494 -0.04376915097 0.21875 -0.04220596701}
- input_process false
- name Viewer1
- selected true
- xpos 177
- ypos 165
-}
